@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer</title>
+</head>
+<body>
+    <center>
+        <embed src="new pdf (1).pdf" type="application/pdf" width="80%" height="600px" />
+    </center>
+
+    
+    
+    
+    
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PDF Viewer</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    </head>
+    <body>
+        <canvas id="pdfCanvas"></canvas>
+    
+        <script>
+            const url = './test.pdf'; // Change this to your PDF file
+            let pdfDoc = null, pageNum = 1, scale = 1.5;
+    
+            pdfjsLib.getDocument(url).promise.then(function(pdf) {
+                pdfDoc = pdf;
+                renderPage(pageNum);
+            });
+    
+            function renderPage(num) {
+                pdfDoc.getPage(num).then(function(page) {
+                    let canvas = document.getElementById('pdfCanvas');
+                    let ctx = canvas.getContext('2d');
+                    let viewport = page.getViewport({ scale: scale });
+    
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+    
+                    let renderContext = {
+                        canvasContext: ctx,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            }
+        </script>
+    </body>
+    </html>
+    
+</body>
+</html>
